@@ -1,0 +1,19 @@
+FROM python:3.9-slim
+WORKDIR /app
+
+RUN pip install --no-cache-dir SQLAlchemy==2.0.45
+RUN pip install --no-cache-dir pymysql==1.1.2
+RUN pip install --no-cache-dir dependency_injector==4.48.3
+RUN pip install --no-cache-dir jsonify==0.5
+RUN pip install --no-cache-dir flask==3.1.2
+RUN pip install --no-cache-dir PyJWT==2.10.1
+
+COPY ../lib_domain ./lib_domain
+COPY ../lib_repositories ./lib_repositories
+COPY ../sfb_services ./sfb_services
+
+ENV PYTHONPATH=/app
+
+WORKDIR /app
+EXPOSE 4041
+CMD ["python", "/app/sfb_services/sfb_services.py"]
